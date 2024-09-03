@@ -6,7 +6,7 @@ import com.aspose.cells.Cells;
 import com.bitian.common.exception.CustomException;
 import com.bitian.common.util.NumberUtil;
 import io.github.juoliii.excel.annotation.ImportExcel;
-import io.github.juoliii.excel.dto.ReadResult;
+import io.github.juoliii.excel.dto.ReadObject;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
@@ -41,7 +41,7 @@ public class ReadClassMapping implements ReadColumnMapping {
     }
 
     @Override
-    public ReadResult mappingObject(int line, Cells cells) throws Exception {
+    public ReadObject mappingObject(int line, Cells cells) throws Exception {
         Object item=this.clazz.newInstance();
         StringBuffer sb=new StringBuffer();
         sb.append("第"+(line+1)+"行：");
@@ -72,7 +72,7 @@ public class ReadClassMapping implements ReadColumnMapping {
                 ex.printStackTrace();
             }
         }
-        return new ReadResult(item,sb.toString());
+        return new ReadObject(item,sb.toString());
     }
 
     public static Object getValue(Cell cell,Field f) throws Exception{

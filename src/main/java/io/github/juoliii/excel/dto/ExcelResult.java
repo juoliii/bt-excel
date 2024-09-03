@@ -10,7 +10,7 @@ import java.util.List;
  * @author admin
  */
 @Data
-public class ImportResult<T> {
+public class ExcelResult<T> {
 
     private int all;
 
@@ -21,19 +21,19 @@ public class ImportResult<T> {
 
     private List<T> datas=Collections.emptyList();
 
-    public ImportResult(List<String> errors){
+    public ExcelResult(List<String> errors){
         this.errors=errors;
     }
-    public ImportResult(List<T> datas, List<String> errors){
+    public ExcelResult(List<T> datas, List<String> errors){
         this.datas=datas;
         this.errors=errors;
     }
 
 
-    public static ImportResult error(String error){
+    public static ExcelResult error(String error){
         List<String> errors=new ArrayList<>();
         errors.add(error);
-        return new ImportResult(errors);
+        return new ExcelResult(errors);
     }
 
 }

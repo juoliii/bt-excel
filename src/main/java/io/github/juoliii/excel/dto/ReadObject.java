@@ -8,7 +8,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class ReadResult {
+public class ReadObject {
     private Object value;
     private String error;
 }

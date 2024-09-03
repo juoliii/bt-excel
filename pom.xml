@@ -6,7 +6,7 @@
 
     <groupId>io.github.juoliii</groupId>
     <artifactId>excel</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
     <name>Archetype - bt-superquery-spring-boot-starter</name>
     <description>bt-superquery-spring-boot-starter</description>

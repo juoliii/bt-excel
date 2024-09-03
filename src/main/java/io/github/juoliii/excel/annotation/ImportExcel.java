@@ -17,8 +17,6 @@ public @interface ImportExcel {
 
     String[] dateFormat() default {};
 
-    boolean endIfNull() default false;
-
     boolean throwException() default true;
 
     String defaultValueIfNull() default "";
