@@ -37,6 +37,10 @@ public class ExcelUtil {
         return readExcel(cells,new ReadClassMapping(cls,cells),line);
     }
 
+    public static <T> ExcelResult<T> readExcel(Cells cells, Class<T> cls, int line) throws Exception {
+        return readExcel(cells,new ReadClassMapping(cls,cells),line);
+    }
+
     public static <T> ExcelResult<T> readExcel(Cells cells, ReadColumnMapping mapping, int line ){
         //检查行数够不够
         List<String> errors=new ArrayList<>();

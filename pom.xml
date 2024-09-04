@@ -6,11 +6,11 @@
 
     <groupId>io.github.juoliii</groupId>
     <artifactId>excel</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.4</version>
     <packaging>jar</packaging>
-    <name>Archetype - bt-superquery-spring-boot-starter</name>
-    <description>bt-superquery-spring-boot-starter</description>
-    <url>https://github.com/juoliii</url>
+    <name>bt-excel</name>
+    <description>bt-excel</description>
+    <url>https://github.com/juoliii/bt-excel.git</url>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -28,7 +28,7 @@
         <dependency>
             <groupId>io.github.juoliii</groupId>
             <artifactId>common</artifactId>
-            <version>0.2.2</version>
+            <version>0.2.3</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
