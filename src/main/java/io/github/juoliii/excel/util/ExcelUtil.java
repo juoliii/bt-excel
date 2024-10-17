@@ -10,12 +10,10 @@ import com.bitian.common.exception.CustomException;
 import com.bitian.common.util.PrimaryKeyUtil;
 import io.github.juoliii.excel.dto.ExcelResult;
 import io.github.juoliii.excel.dto.ReadObject;
-import io.github.juoliii.excel.mapping.ReadClassMapping;
-import io.github.juoliii.excel.mapping.ReadColumnMapping;
-import io.github.juoliii.excel.mapping.WriteDefaultWriteFieldMapping;
-import io.github.juoliii.excel.mapping.WriteFieldMapping;
+import io.github.juoliii.excel.mapping.*;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,23 +28,42 @@ public class ExcelUtil {
         return readExcel(inputStream,cls,1);
     }
 
+    public static <T> ExcelResult<T> readExcelToMap(InputStream inputStream,int maxLine) throws Exception {
+        Workbook workbook=new Workbook(inputStream);
+        Worksheet worksheet=workbook.getWorksheets().get(0);
+        Cells cells=worksheet.getCells();
+        return readExcel(cells,new ReadMapMapping(cells),1,maxLine);
+    }
+
+    public static <T> ExcelResult<T> readExcelToMap(String filePath,int maxLine) throws Exception {
+        Workbook workbook=new Workbook(filePath);
+        Worksheet worksheet=workbook.getWorksheets().get(0);
+        Cells cells=worksheet.getCells();
+        return readExcel(cells,new ReadMapMapping(cells),1,maxLine);
+    }
+
     public static <T> ExcelResult<T> readExcel(InputStream inputStream, Class<T> cls, int line) throws Exception {
         Workbook workbook=new Workbook(inputStream);
         Worksheet worksheet=workbook.getWorksheets().get(0);
         Cells cells=worksheet.getCells();
-        return readExcel(cells,new ReadClassMapping(cls,cells),line);
+        return readExcel(cells,new ReadClassMapping(cls,cells),line,0);
     }
 
     public static <T> ExcelResult<T> readExcel(Cells cells, Class<T> cls, int line) throws Exception {
-        return readExcel(cells,new ReadClassMapping(cls,cells),line);
+        return readExcel(cells,new ReadClassMapping(cls,cells),line,0);
     }
 
-    public static <T> ExcelResult<T> readExcel(Cells cells, ReadColumnMapping mapping, int line ){
+    public static <T> ExcelResult<T> readExcel(Cells cells, ReadColumnMapping mapping, int startLine){
+        return readExcel(cells,mapping,startLine,0);
+    }
+
+    public static <T> ExcelResult<T> readExcel(Cells cells, ReadColumnMapping mapping, int startLine,int maxLine){
         //检查行数够不够
         List<String> errors=new ArrayList<>();
         List<T> datas=new ArrayList<>();
         ExcelResult<T> result=new ExcelResult<>(datas,errors);
-        if(cells.getMaxRow()+1<line){
+        int maxRow=maxLine==0?cells.getMaxDataRow():(cells.getMaxDataRow()<maxLine?cells.getMaxDataRow():maxLine);
+        if(maxRow+1<startLine){
             return ExcelResult.error("没有可导入数据");
         }
         try {
@@ -55,7 +72,7 @@ public class ExcelUtil {
                 columns.add(cells.get(0,i).getStringValue().trim());
             }
             int allNum=0;
-            for (int i = line; i <=cells.getMaxDataRow(); i++) {
+            for (int i = startLine; i <=maxRow; i++) {
                 allNum++;
                 ReadObject readResult=mapping.mappingObject(i,cells);
                 if(readResult.getValue()!=null){
