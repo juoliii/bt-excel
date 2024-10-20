@@ -81,6 +81,7 @@ public class ExcelUtil {
                     errors.add(readResult.getError());
                 }
             }
+            result.setColumns(columns);
             result.setAll(allNum);
             result.setError(errors.size());
             result.setSuccess(allNum-errors.size());

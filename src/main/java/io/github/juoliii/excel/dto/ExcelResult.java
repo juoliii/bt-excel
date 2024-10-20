@@ -17,6 +17,7 @@ public class ExcelResult<T> {
     private int success;
     private int error;
 
+    private List<String> columns;
     private List<String> errors= Collections.emptyList();
 
     private List<T> datas=Collections.emptyList();
