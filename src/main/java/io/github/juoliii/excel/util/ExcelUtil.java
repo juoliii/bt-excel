@@ -24,33 +24,41 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class ExcelUtil {
 
+    public static <T> ExcelResult<T> readExcelToMap(InputStream inputStream,int maxLine) throws Exception {
+        return readExcelToMap(inputStream,1,maxLine);
+    }
+
+    public static <T> ExcelResult<T> readExcelToMap(InputStream inputStream,int startLine,int maxLine) throws Exception {
+        Workbook workbook=new Workbook(inputStream);
+        Worksheet worksheet=workbook.getWorksheets().get(0);
+        Cells cells=worksheet.getCells();
+        return readExcel(cells,new ReadMapMapping(cells),startLine,maxLine);
+    }
+
+    public static <T> ExcelResult<T> readExcelToMap(String filePath,int maxLine) throws Exception {
+        return readExcelToMap(filePath,1,maxLine);
+    }
+
+    public static <T> ExcelResult<T> readExcelToMap(String filePath,int startLine,int maxLine) throws Exception {
+        Workbook workbook=new Workbook(filePath);
+        Worksheet worksheet=workbook.getWorksheets().get(0);
+        Cells cells=worksheet.getCells();
+        return readExcel(cells,new ReadMapMapping(cells),startLine,maxLine);
+    }
+
     public static <T> ExcelResult<T> readExcel(InputStream inputStream, Class<T> cls) throws Exception {
         return readExcel(inputStream,cls,1);
     }
 
-    public static <T> ExcelResult<T> readExcelToMap(InputStream inputStream,int maxLine) throws Exception {
+    public static <T> ExcelResult<T> readExcel(InputStream inputStream, Class<T> cls, int startLine) throws Exception {
         Workbook workbook=new Workbook(inputStream);
         Worksheet worksheet=workbook.getWorksheets().get(0);
         Cells cells=worksheet.getCells();
-        return readExcel(cells,new ReadMapMapping(cells),1,maxLine);
+        return readExcel(cells,new ReadClassMapping(cls,cells),startLine,0);
     }
 
-    public static <T> ExcelResult<T> readExcelToMap(String filePath,int maxLine) throws Exception {
-        Workbook workbook=new Workbook(filePath);
-        Worksheet worksheet=workbook.getWorksheets().get(0);
-        Cells cells=worksheet.getCells();
-        return readExcel(cells,new ReadMapMapping(cells),1,maxLine);
-    }
-
-    public static <T> ExcelResult<T> readExcel(InputStream inputStream, Class<T> cls, int line) throws Exception {
-        Workbook workbook=new Workbook(inputStream);
-        Worksheet worksheet=workbook.getWorksheets().get(0);
-        Cells cells=worksheet.getCells();
-        return readExcel(cells,new ReadClassMapping(cls,cells),line,0);
-    }
-
-    public static <T> ExcelResult<T> readExcel(Cells cells, Class<T> cls, int line) throws Exception {
-        return readExcel(cells,new ReadClassMapping(cls,cells),line,0);
+    public static <T> ExcelResult<T> readExcel(Cells cells, Class<T> cls, int startLine) throws Exception {
+        return readExcel(cells,new ReadClassMapping(cls,cells),startLine,0);
     }
 
     public static <T> ExcelResult<T> readExcel(Cells cells, ReadColumnMapping mapping, int startLine){
