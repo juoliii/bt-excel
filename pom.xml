@@ -6,7 +6,7 @@
 
     <groupId>io.github.juoliii</groupId>
     <artifactId>excel</artifactId>
-    <version>1.0.9</version>
+    <version>1.1.0</version>
     <packaging>jar</packaging>
     <name>bt-excel</name>
     <description>bt-excel</description>
@@ -28,7 +28,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.aspose</groupId>
+            <groupId>io.github.juoliii</groupId>
             <artifactId>cells</artifactId>
             <version>0.0.1</version>
         </dependency>
@@ -53,13 +53,6 @@
         </dependency>
 
     </dependencies>
-
-    <repositories>
-        <repository>
-            <id>mymaven</id>
-            <url>https://nexus.netman.vip/repository/mymaven/</url>
-        </repository>
-    </repositories>
 
     <licenses>
         <license>
