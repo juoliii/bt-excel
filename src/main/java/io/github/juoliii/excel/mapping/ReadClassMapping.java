@@ -109,9 +109,7 @@ public class ReadClassMapping implements ReadColumnMapping {
                 return null;
             }
         }else if (f.getType() == Long.class) {
-            if(cell.getType() == CellValueType.IS_NUMERIC){
-                return (long)cell.getIntValue();
-            }else if(cell.getType() == CellValueType.IS_STRING){
+            if(cell.getType() == CellValueType.IS_NUMERIC || cell.getType() == CellValueType.IS_STRING){
                 String val=StringUtils.defaultIfBlank(cell.getStringValue(),"");
                 if(StringUtils.isBlank(val)){
                     return NumberUtil.isNumber(ie.defaultValueIfNull())?NumberUtil.parseLong(ie.defaultValueIfNull()):null;

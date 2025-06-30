@@ -6,7 +6,7 @@
 
     <groupId>io.github.juoliii</groupId>
     <artifactId>excel</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <packaging>jar</packaging>
     <name>bt-excel</name>
     <description>bt-excel</description>
